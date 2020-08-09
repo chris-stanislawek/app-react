@@ -23,7 +23,10 @@ const MainContainer = () => {
     const API = `https://api.giphy.com/v1/gifs/search?api_key=VGHTkMNyiXILVivqLuLA7SZTQgR35M71&q=${searchQuery}`;
     axios
       .get(API)
-      .then((response) => setGifs(response.data.data))
+      .then((response) => {
+        setLoading(false);
+        setGifs(response.data.data);
+      })
       .catch((error) => console.log(error));
   };
 
@@ -36,7 +39,7 @@ const MainContainer = () => {
       <Navbar />
       <div className="container mt-3">
         <Search getGif={getGif} />
-        {loading ? <GifContainer gifs={gifs} /> : <Spinner />}
+        {loading ? <Spinner /> : <GifContainer gifs={gifs} />}
       </div>
     </div>
   );
